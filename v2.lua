@@ -789,7 +789,7 @@ function library:CreateWindow(name, theme)
             DropdownContainer.Size = UDim2.new(1, 0, 0, 0)
             DropdownContainer.Visible = false
             DropdownContainer.ClipsDescendants = true
-            DropdownContainer.ZIndex = 10
+            DropdownContainer.ZIndex = 100
             
             ContainerCorner.CornerRadius = UDim.new(0, 5)
             ContainerCorner.Parent = DropdownContainer
