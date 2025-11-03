@@ -354,6 +354,7 @@ function library:CreateWindow(name, theme)
         NotifFrame.ClipsDescendants = true
         NotifFrame.Position = UDim2.new(1, 50, 0, 0)
         NotifFrame.BackgroundTransparency = 1
+        NotifFrame.ZIndex = 15  -- ADD THIS LINE (higher than watermark's ZIndex of 10)
         
         NotifCorner.CornerRadius = UDim.new(0, 6)
         NotifCorner.Parent = NotifFrame
