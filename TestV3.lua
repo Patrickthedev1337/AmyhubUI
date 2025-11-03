@@ -435,15 +435,22 @@ function library:CreateWindow(name, theme)
         
         -- Hide watermark if it's in TopRight
         local watermark = Screen:FindFirstChild("Watermark")
-        if watermark and watermark.Position == UDim2.new(1, -20, 0, 20) then
-            TweenService:Create(watermark, TweenInfo.new(0.3), {
-                BackgroundTransparency = 1
-            }):Play()
-            if watermark:FindFirstChild("WatermarkLabel") then
-                TweenService:Create(watermark.WatermarkLabel, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
-            end
-            if watermark:FindFirstChild("WatermarkAccent") then
-                TweenService:Create(watermark.WatermarkAccent, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+        if watermark then
+            -- Check if watermark is in TopRight position
+            local isTopRight = watermark.AnchorPoint == Vector2.new(1, 0) and 
+                              watermark.Position.X.Scale == 1 and 
+                              watermark.Position.Y.Offset == 20
+            
+            if isTopRight then
+                TweenService:Create(watermark, TweenInfo.new(0.3), {
+                    BackgroundTransparency = 1
+                }):Play()
+                if watermark:FindFirstChild("WatermarkLabel") then
+                    TweenService:Create(watermark.WatermarkLabel, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
+                end
+                if watermark:FindFirstChild("WatermarkAccent") then
+                    TweenService:Create(watermark.WatermarkAccent, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+                end
             end
         end
         
