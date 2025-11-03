@@ -496,9 +496,12 @@ function library:CreateWindow(name, theme)
     WatermarkAccent.BackgroundColor3 = theme3
     WatermarkAccent.BorderSizePixel = 0
     WatermarkAccent.Size = UDim2.new(1, 0, 0, 3)
+    WatermarkAccent.ZIndex = 10  -- ADD THIS
     
+
     AccentCorner.CornerRadius = UDim.new(0, 6)
     AccentCorner.Parent = WatermarkAccent
+
     
     WatermarkLabel.Parent = WatermarkFrame
     WatermarkLabel.BackgroundTransparency = 1
@@ -509,6 +512,7 @@ function library:CreateWindow(name, theme)
     WatermarkLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     WatermarkLabel.TextSize = 13
     WatermarkLabel.TextXAlignment = Enum.TextXAlignment.Left
+    WatermarkLabel.ZIndex = 10  -- ADD THIS
     
     -- Auto-size the watermark based on text
     local textSize = game:GetService("TextService"):GetTextSize(
