@@ -329,8 +329,8 @@ function library:CreateWindow(name, theme)
             NotifContainer.Name = "NotificationContainer"
             NotifContainer.Parent = Screen
             NotifContainer.BackgroundTransparency = 1
-            NotifContainer.Position = UDim2.new(1, -320, 0, 20)
-            NotifContainer.Size = UDim2.new(0, 300, 1, -40)
+            NotifContainer.Position = UDim2.new(1, -320, 0, 60)
+            NotifContainer.Size = UDim2.new(0, 300, 1, -80)
             
             local NotifLayout = Instance.new("UIListLayout")
             NotifLayout.Parent = NotifContainer
@@ -423,7 +423,7 @@ function library:CreateWindow(name, theme)
             TweenService:Create(CloseBtn, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(150, 150, 150), Rotation = 0}):Play()
         end)
         
--- Calculate height
+        -- Calculate height
         local height = 70
         
         -- Slide in animation
@@ -432,27 +432,6 @@ function library:CreateWindow(name, theme)
             Size = UDim2.new(1, 0, 0, height),
             BackgroundTransparency = 0
         }):Play()
-        
-        -- Hide watermark if it's in TopRight
-        local watermark = Screen:FindFirstChild("Watermark")
-        if watermark then
-            -- Check if watermark is in TopRight position
-            local isTopRight = watermark.AnchorPoint == Vector2.new(1, 0) and 
-                              watermark.Position.X.Scale == 1 and 
-                              watermark.Position.Y.Offset == 20
-            
-            if isTopRight then
-                TweenService:Create(watermark, TweenInfo.new(0.3), {
-                    BackgroundTransparency = 1
-                }):Play()
-                if watermark:FindFirstChild("WatermarkLabel") then
-                    TweenService:Create(watermark.WatermarkLabel, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
-                end
-                if watermark:FindFirstChild("WatermarkAccent") then
-                    TweenService:Create(watermark.WatermarkAccent, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
-                end
-            end
-        end
         
         play("rbxassetid://6895079853")
         
@@ -463,33 +442,6 @@ function library:CreateWindow(name, theme)
             }):Play()
             wait(0.4)
             NotifFrame:Destroy()
-            
-            -- Show watermark again if no other notifications exist and it's TopRight
-            local notifContainer = Screen:FindFirstChild("NotificationContainer")
-            local watermark = Screen:FindFirstChild("Watermark")
-            if watermark and watermark.Position == UDim2.new(1, -20, 0, 20) then
-                local hasNotifications = false
-                if notifContainer then
-                    for _, child in pairs(notifContainer:GetChildren()) do
-                        if child:IsA("Frame") and child ~= notifContainer then
-                            hasNotifications = true
-                            break
-                        end
-                    end
-                end
-                
-                if not hasNotifications then
-                    TweenService:Create(watermark, TweenInfo.new(0.3), {
-                        BackgroundTransparency = 0
-                    }):Play()
-                    if watermark:FindFirstChild("WatermarkLabel") then
-                        TweenService:Create(watermark.WatermarkLabel, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
-                    end
-                    if watermark:FindFirstChild("WatermarkAccent") then
-                        TweenService:Create(watermark.WatermarkAccent, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
-                    end
-                end
-            end
         end
         
         CloseBtn.MouseButton1Click:Connect(closeNotification)
@@ -502,8 +454,6 @@ function library:CreateWindow(name, theme)
             end
         end)
     end
-   
-
 
     function InsideLibrary:CreateWatermark(options)
     local text = options.Text or options.text or "Watermark"
