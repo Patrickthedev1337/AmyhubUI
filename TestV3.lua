@@ -846,7 +846,7 @@ end
             end)
         end
         
-        function InsideTab:CreateColorPicker(text, defaultColor, callback)
+function InsideTab:CreateColorPicker(text, defaultColor, callback)
     callback = callback or function() end
     defaultColor = defaultColor or Color3.fromRGB(255, 255, 255)
     
@@ -1166,10 +1166,11 @@ end
     
     -- Canvas dragging (FIXED)
     local canvasDragging = false
+    local mouse = game.Players.LocalPlayer:GetMouse()
     
-    local function updateCanvas(inputX, inputY)
-        local relX = math.clamp(inputX - ColorCanvas.AbsolutePosition.X, 0, ColorCanvas.AbsoluteSize.X)
-        local relY = math.clamp(inputY - ColorCanvas.AbsolutePosition.Y, 0, ColorCanvas.AbsoluteSize.Y)
+    local function updateCanvas()
+        local relX = math.clamp(mouse.X - ColorCanvas.AbsolutePosition.X, 0, ColorCanvas.AbsoluteSize.X)
+        local relY = math.clamp(mouse.Y - ColorCanvas.AbsolutePosition.Y, 0, ColorCanvas.AbsoluteSize.Y)
         
         sat = relX / ColorCanvas.AbsoluteSize.X
         val = 1 - (relY / ColorCanvas.AbsoluteSize.Y)
@@ -1180,6 +1181,7 @@ end
     
     ColorCanvas.MouseButton1Down:Connect(function()
         canvasDragging = true
+        updateCanvas()
     end)
     
     UserInputService.InputEnded:Connect(function(input)
@@ -1188,23 +1190,17 @@ end
         end
     end)
     
-    UserInputService.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement and canvasDragging then
-            local mousePos = UserInputService:GetMouseLocation()
-            updateCanvas(mousePos.X, mousePos.Y)
+    mouse.Move:Connect(function()
+        if canvasDragging then
+            updateCanvas()
         end
-    end)
-    
-    ColorCanvas.MouseButton1Click:Connect(function()
-        local mousePos = UserInputService:GetMouseLocation()
-        updateCanvas(mousePos.X, mousePos.Y)
     end)
     
     -- Hue bar dragging (FIXED)
     local hueDragging = false
     
-    local function updateHue(inputY)
-        local relY = math.clamp(inputY - HueBar.AbsolutePosition.Y, 0, HueBar.AbsoluteSize.Y)
+    local function updateHue()
+        local relY = math.clamp(mouse.Y - HueBar.AbsolutePosition.Y, 0, HueBar.AbsoluteSize.Y)
         hue = relY / HueBar.AbsoluteSize.Y
         
         HueSelector.Position = UDim2.new(0, -2, hue, -3)
@@ -1220,6 +1216,7 @@ end
     
     hueButton.MouseButton1Down:Connect(function()
         hueDragging = true
+        updateHue()
     end)
     
     UserInputService.InputEnded:Connect(function(input)
@@ -1228,16 +1225,10 @@ end
         end
     end)
     
-    UserInputService.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement and hueDragging then
-            local mousePos = UserInputService:GetMouseLocation()
-            updateHue(mousePos.Y)
+    mouse.Move:Connect(function()
+        if hueDragging then
+            updateHue()
         end
-    end)
-    
-    hueButton.MouseButton1Click:Connect(function()
-        local mousePos = UserInputService:GetMouseLocation()
-        updateHue(mousePos.Y)
     end)
     
     -- RGB Input handling
