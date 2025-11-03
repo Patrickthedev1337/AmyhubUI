@@ -87,6 +87,14 @@ function library:CreateWindow(name, theme)
         theme2 = Color3.fromRGB(5, 5, 5)
         theme3 = Color3.fromRGB(150, 150, 150)
         toolight = true
+    elseif theme == "Sky" then
+        theme1 = Color3.fromRGB(18, 22, 28)
+        theme2 = Color3.fromRGB(10, 15, 25)
+        theme3 = Color3.fromRGB(135, 206, 235)
+    elseif theme == "Void" or theme == "Abyss" then
+        theme1 = Color3.fromRGB(5, 5, 10)
+        theme2 = Color3.fromRGB(2, 2, 5)
+        theme3 = Color3.fromRGB(100, 0, 255)
     else
         theme1 = Color3.fromRGB(20, 20, 20)
         theme2 = Color3.fromRGB(15, 15, 15)
